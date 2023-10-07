@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 
 @Entity
-@Getter
 @EnableJpaAuditing
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -23,4 +22,10 @@ public class User extends BaseTimeEntity{
     private String email;
 
     private String name;
+
+    private Integer age;
+
+    public Long getId() {
+        return id;
+    }
 }
