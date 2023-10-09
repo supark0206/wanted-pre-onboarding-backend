@@ -20,4 +20,11 @@ public class RecruitmentController {
 
         return ResponseEntity.ok(new ResultResponse(id,"채용공고를 등록하였습니다."));
     }
+
+    @PutMapping("/{companyId}/{recruitId}")
+    public ResponseEntity<ResultResponse> update(@PathVariable Long companyId, @PathVariable Long recruitId, @RequestBody RecruitmentRequest recruitmentRequest){
+        Long id = recruitmentService.update(companyId, recruitId, recruitmentRequest);
+
+        return ResponseEntity.ok(new ResultResponse(id,"채용공고를 등록하였습니다."));
+    }
 }

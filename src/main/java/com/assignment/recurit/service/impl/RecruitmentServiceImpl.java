@@ -39,9 +39,28 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         ).getId();
     }
 
+    @Transactional
     @Override
     public Long update(Long companyId, Long recruitmentId, RecruitmentRequest recruitmentRequest) {
-        return null;
+
+        Company company = companyRepository.findById(companyId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        Recruitment recruitment = recruitmentRepository.findByIdAndCompany(recruitmentId,company).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        return recruitmentRepository.save(
+                Recruitment.builder()
+                        .id(recruitment.getId())
+                        .company(company)
+                        .content(recruitmentRequest.getContent())
+                        .position(recruitmentRequest.getPosition())
+                        .reward(recruitmentRequest.getReward())
+                        .skill(recruitmentRequest.getSkill())
+                        .build()
+        ).getId();
     }
 
 }
