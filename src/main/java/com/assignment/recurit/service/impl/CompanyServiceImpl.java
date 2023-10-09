@@ -19,7 +19,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Transactional
     @Override
-    public Long joinCompany(JoinCompanyRequest joinCompanyRequest) {
+    public Long join(JoinCompanyRequest joinCompanyRequest) {
 
         return companyRepository.save(
                 Company.builder()

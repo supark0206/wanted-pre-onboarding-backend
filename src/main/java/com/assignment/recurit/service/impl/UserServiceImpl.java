@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Long joinUser(JoinUserRequest joinUserRequest) {
+    public Long join(JoinUserRequest joinUserRequest) {
         return userRepository.save(
                 User.builder()
                         .email(joinUserRequest.getEmail())

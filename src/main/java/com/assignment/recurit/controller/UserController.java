@@ -18,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResultResponse> joinUser(@RequestBody JoinUserRequest joinUserRequest){
-        Long id = userService.joinUser(joinUserRequest);
+    public ResponseEntity<ResultResponse> join(@RequestBody JoinUserRequest joinUserRequest){
+        Long id = userService.join(joinUserRequest);
 
         return ResponseEntity.ok(new ResultResponse(id,"회원가입에 성공하였습니다."));
     }

@@ -18,8 +18,8 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping
-    public ResponseEntity<ResultResponse> joinCompany(@RequestBody JoinCompanyRequest joinCompanyRequest){
-        Long id = companyService.joinCompany(joinCompanyRequest);
+    public ResponseEntity<ResultResponse> join(@RequestBody JoinCompanyRequest joinCompanyRequest){
+        Long id = companyService.join(joinCompanyRequest);
 
         return ResponseEntity.ok(new ResultResponse(id,"기업회원 가입 성공하였습니다."));
     }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 @EnableJpaAuditing
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,7 +24,4 @@ public class Company extends BaseTimeEntity {
     //업종
     private String type;
 
-    public Long getId() {
-        return id;
-    }
 }

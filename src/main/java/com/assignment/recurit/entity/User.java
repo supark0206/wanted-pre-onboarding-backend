@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 
-
+@Getter
 @Entity
 @EnableJpaAuditing
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,8 +24,4 @@ public class User extends BaseTimeEntity{
     private String name;
 
     private Integer age;
-
-    public Long getId() {
-        return id;
-    }
 }
