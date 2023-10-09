@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3307/recurit
-    username: recurit
-    password: recurit
+    url: jdbc:mysql://localhost:3307/recruit
+    username: recruit
+    password: recruit
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
