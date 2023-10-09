@@ -1,18 +1,13 @@
 package com.assignment.recurit.service.impl;
 
-import com.assignment.recurit.dto.request.JoinCompanyRequest;
-import com.assignment.recurit.dto.request.JoinUserRequest;
-import com.assignment.recurit.dto.request.RegisterRecruitmentRequest;
+import com.assignment.recurit.dto.request.RecruitmentRequest;
 import com.assignment.recurit.entity.Company;
 import com.assignment.recurit.entity.Recruitment;
-import com.assignment.recurit.entity.User;
 import com.assignment.recurit.exception.CustomException;
 import com.assignment.recurit.exception.ErrorCode;
 import com.assignment.recurit.repository.CompanyRepository;
 import com.assignment.recurit.repository.RecruitmentRepository;
-import com.assignment.recurit.repository.UserRepository;
 import com.assignment.recurit.service.RecruitmentService;
-import com.assignment.recurit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +22,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Transactional
     @Override
-    public Long register(Long companyId, RegisterRecruitmentRequest registerRecruitmentRequest) {
+    public Long register(Long companyId, RecruitmentRequest recruitmentRequest) {
 
         Company company = companyRepository.findById(companyId).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND)
@@ -36,12 +31,17 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         return recruitmentRepository.save(
                 Recruitment.builder()
                         .company(company)
-                        .content(registerRecruitmentRequest.getContent())
-                        .position(registerRecruitmentRequest.getPosition())
-                        .reward(registerRecruitmentRequest.getReward())
-                        .skill(registerRecruitmentRequest.getSkill())
+                        .content(recruitmentRequest.getContent())
+                        .position(recruitmentRequest.getPosition())
+                        .reward(recruitmentRequest.getReward())
+                        .skill(recruitmentRequest.getSkill())
                         .build()
         ).getId();
+    }
+
+    @Override
+    public Long update(Long companyId, Long recruitmentId, RecruitmentRequest recruitmentRequest) {
+        return null;
     }
 
 }
