@@ -6,4 +6,7 @@ public interface RecruitmentService {
     public Long register(Long companyId, RecruitmentRequest recruitmentRequest);
 
     public Long update(Long companyId, Long recruitmentId, RecruitmentRequest recruitmentRequest);
+
+    public Long remove(Long companyId, Long recruitmentId);
+
 }

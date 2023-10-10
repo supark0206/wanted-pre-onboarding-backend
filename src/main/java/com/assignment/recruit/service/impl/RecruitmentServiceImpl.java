@@ -63,4 +63,21 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         ).getId();
     }
 
+    @Transactional
+    @Override
+    public Long remove(Long companyId, Long recruitmentId) {
+
+        Company company = companyRepository.findById(companyId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        Recruitment recruitment = recruitmentRepository.findByIdAndCompany(recruitmentId,company).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        recruitmentRepository.delete(recruitment);
+
+        return recruitment.getId();
+    }
+
 }
