@@ -2,8 +2,12 @@ package com.assignment.recruit.controller;
 
 import com.assignment.recruit.dto.commonResponse.ResultResponse;
 import com.assignment.recruit.dto.request.RecruitmentRequest;
+import com.assignment.recruit.dto.response.RecruitmentListResponse;
 import com.assignment.recruit.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +37,26 @@ public class RecruitmentController {
         Long id = recruitmentService.remove(companyId, recruitId);
 
         return ResponseEntity.ok(new ResultResponse(id,"채용공고를 삭제하였습니다.."));
+    }
+
+    @GetMapping("")
+    public RecruitmentListResponse recruitmentList(@RequestParam(value = "page",defaultValue = "1") Integer page,
+                                                   @RequestParam(value = "size",defaultValue = "10") Integer size){
+        if(page == null) page = 1;
+
+        Pageable pageable = PageRequest.of(page-1,size, Sort.by("id"));
+
+        return RecruitmentListResponse.recruitmentListResponseFrom(recruitmentService.recruitmentList(pageable));
+    }
+
+    @GetMapping("/list")
+    public RecruitmentListResponse searchRecruitmentList(@RequestParam(value="search") String search,
+                                                         @RequestParam(value = "page",defaultValue = "1") Integer page,
+                                                         @RequestParam(value = "size",defaultValue = "10") Integer size){
+        if(page == null) page = 1;
+
+        Pageable pageable = PageRequest.of(page-1,size, Sort.by("id"));
+
+        return RecruitmentListResponse.recruitmentListResponseFrom(recruitmentService.searchRecruitmentList(pageable,search));
     }
 }

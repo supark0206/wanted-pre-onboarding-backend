@@ -1,6 +1,7 @@
 package com.assignment.recruit.service.impl;
 
 import com.assignment.recruit.dto.request.RecruitmentRequest;
+import com.assignment.recruit.dto.response.RecruitmentResponse;
 import com.assignment.recruit.entity.Company;
 import com.assignment.recruit.entity.Recruitment;
 import com.assignment.recruit.exception.CustomException;
@@ -9,6 +10,8 @@ import com.assignment.recruit.repository.CompanyRepository;
 import com.assignment.recruit.repository.RecruitmentRepository;
 import com.assignment.recruit.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +81,16 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         recruitmentRepository.deleteById(recruitment.getId());
 
         return recruitment.getId();
+    }
+
+    @Override
+    public Page<Recruitment> recruitmentList(Pageable pageable) {
+        return recruitmentRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Recruitment> searchRecruitmentList(Pageable pageable, String search) {
+        return recruitmentRepository.searchRecruitment(pageable, search, search, search, search);
     }
 
 }
