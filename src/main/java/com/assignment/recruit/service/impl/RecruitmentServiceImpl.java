@@ -75,7 +75,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 () -> new CustomException(ErrorCode.NOT_FOUND)
         );
 
-        recruitmentRepository.delete(recruitment);
+        recruitmentRepository.deleteById(recruitment.getId());
 
         return recruitment.getId();
     }

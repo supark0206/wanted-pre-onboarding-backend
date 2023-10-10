@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @SpringBootTest
 @Transactional
 class RecruitmentServiceImplTest {
@@ -97,10 +99,6 @@ class RecruitmentServiceImplTest {
         //given
         Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
 
-        Recruitment recruitment = recruitmentRepository.findById(saveId).orElseThrow(
-                () -> new CustomException(ErrorCode.NOT_FOUND)
-        );
-
         // when
         Long updateId = recruitmentService.update(saveCompanyId, saveId, recruitmentUpdateRequest);
 
@@ -117,6 +115,21 @@ class RecruitmentServiceImplTest {
 
         Assertions.assertThat(recruitmentUpdate.getCompany()).isEqualTo(saveCompany);
 
+    }
+
+    @Test
+    void 채용공고삭제(){
+        //given
+        Long saveRecruitmentId = recruitmentService.register(saveCompanyId, recruitmentRequest);
+
+
+        // when
+        Long removeId = recruitmentService.remove(saveCompanyId, saveRecruitmentId);
+        List<Recruitment> findAll = recruitmentRepository.findAll();
+
+        //then
+        Assertions.assertThat(saveRecruitmentId).isEqualTo(removeId);
+        Assertions.assertThat(findAll.size()).isEqualTo(0);
     }
 
 }
