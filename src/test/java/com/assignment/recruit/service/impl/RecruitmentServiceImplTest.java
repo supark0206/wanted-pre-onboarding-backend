@@ -33,7 +33,10 @@ class RecruitmentServiceImplTest {
     RecruitmentRepository recruitmentRepository;
 
     private RecruitmentRequest recruitmentRequest;
+    private RecruitmentRequest recruitmentUpdateRequest;
     private JoinCompanyRequest joinCompanyRequest;
+    private Company saveCompany;
+    private Long saveCompanyId;
     
     @BeforeEach
     void beforeEach() {
@@ -49,18 +52,27 @@ class RecruitmentServiceImplTest {
                 .skill("java")
                 .reward("100만원")
                 .build();
+
+        recruitmentUpdateRequest = RecruitmentRequest.builder()
+                .content("내용 수정")
+                .position("신입 수정")
+                .skill("java 수정")
+                .reward("100만원 수정")
+                .build();
+
+        saveCompanyId = companyService.join(joinCompanyRequest);
+
+        saveCompany = companyRepository.findById(saveCompanyId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+
     }
 
 
     @Test
     void 채용공고등록(){
         //given
-        Long saveCompanyId = companyService.join(joinCompanyRequest);
-
-        Company saveCompany = companyRepository.findById(saveCompanyId).orElseThrow(
-                () -> new CustomException(ErrorCode.NOT_FOUND)
-        );
-
         // when
         Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
 
@@ -75,6 +87,35 @@ class RecruitmentServiceImplTest {
         Assertions.assertThat(recruitmentRequest.getSkill()).isEqualTo(recruitment.getSkill());
 
         Assertions.assertThat(recruitment.getCompany()).isEqualTo(saveCompany);
+
+    }
+
+
+    @Test
+    void 채용공고수정(){
+
+        //given
+        Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
+
+        Recruitment recruitment = recruitmentRepository.findById(saveId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        // when
+        Long updateId = recruitmentService.update(saveCompanyId, saveId, recruitmentUpdateRequest);
+
+        Recruitment recruitmentUpdate = recruitmentRepository.findById(updateId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+
+        // then
+        Assertions.assertThat(recruitmentUpdateRequest.getContent()).isEqualTo(recruitmentUpdate.getContent());
+        Assertions.assertThat(recruitmentUpdateRequest.getReward()).isEqualTo(recruitmentUpdate.getReward());
+        Assertions.assertThat(recruitmentUpdateRequest.getPosition()).isEqualTo(recruitmentUpdate.getPosition());
+        Assertions.assertThat(recruitmentUpdateRequest.getSkill()).isEqualTo(recruitmentUpdate.getSkill());
+
+        Assertions.assertThat(recruitmentUpdate.getCompany()).isEqualTo(saveCompany);
 
     }
 
