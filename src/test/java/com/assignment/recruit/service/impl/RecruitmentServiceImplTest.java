@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -34,34 +35,18 @@ class RecruitmentServiceImplTest {
     @Autowired
     RecruitmentRepository recruitmentRepository;
 
-    private RecruitmentRequest recruitmentRequest;
-    private RecruitmentRequest recruitmentUpdateRequest;
-    private JoinCompanyRequest joinCompanyRequest;
     private Company saveCompany;
     private Long saveCompanyId;
     
     @BeforeEach
     void beforeEach() {
-        joinCompanyRequest = JoinCompanyRequest.builder()
+        JoinCompanyRequest joinCompanyRequest = JoinCompanyRequest.builder()
                 .name("회사명")
                 .email("test@test.com")
                 .type("IT회사")
                 .build();
-        
-        recruitmentRequest = RecruitmentRequest.builder()
-                .content("내용")
-                .position("신입")
-                .skill("java")
-                .reward("100만원")
-                .build();
 
-        recruitmentUpdateRequest = RecruitmentRequest.builder()
-                .content("내용 수정")
-                .position("신입 수정")
-                .skill("java 수정")
-                .reward("100만원 수정")
-                .build();
-
+        //회사
         saveCompanyId = companyService.join(joinCompanyRequest);
 
         saveCompany = companyRepository.findById(saveCompanyId).orElseThrow(
@@ -75,6 +60,13 @@ class RecruitmentServiceImplTest {
     @Test
     void 채용공고등록(){
         //given
+        RecruitmentRequest recruitmentRequest = RecruitmentRequest.builder()
+                .content("내용")
+                .position("신입")
+                .skill("java")
+                .reward("100만원")
+                .build();
+
         // when
         Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
 
@@ -97,6 +89,20 @@ class RecruitmentServiceImplTest {
     void 채용공고수정(){
 
         //given
+        RecruitmentRequest recruitmentRequest = RecruitmentRequest.builder()
+                .content("내용")
+                .position("신입")
+                .skill("java")
+                .reward("100만원")
+                .build();
+
+        RecruitmentRequest recruitmentUpdateRequest = RecruitmentRequest.builder()
+                .content("내용 수정")
+                .position("신입 수정")
+                .skill("java 수정")
+                .reward("100만원 수정")
+                .build();
+
         Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
 
         // when
@@ -120,16 +126,69 @@ class RecruitmentServiceImplTest {
     @Test
     void 채용공고삭제(){
         //given
-        Long saveRecruitmentId = recruitmentService.register(saveCompanyId, recruitmentRequest);
+        List<RecruitmentRequest> recruitmentRequestList = new ArrayList<>();
 
+        //채용공고리스트
+        recruitmentRequestList.add(
+                RecruitmentRequest.builder()
+                        .content("내용").position("신입1").skill("java").reward("100만원")
+                        .build()
+        );
+        recruitmentRequestList.add(
+                RecruitmentRequest.builder()
+                        .content("내용").position("신입2").skill("java").reward("100만원")
+                        .build()
+        );
+        recruitmentRequestList.add(
+                RecruitmentRequest.builder()
+                        .content("내용").position("신입3").skill("python").reward("100만원")
+                        .build()
+        );
+
+
+        recruitmentRequestList.forEach(
+                recruitmentRequest -> recruitmentService.register(saveCompanyId, recruitmentRequest)
+        );
 
         // when
-        Long removeId = recruitmentService.remove(saveCompanyId, saveRecruitmentId);
+        recruitmentService.remove(saveCompanyId, 1L);
         List<Recruitment> findAll = recruitmentRepository.findAll();
 
         //then
-        Assertions.assertThat(saveRecruitmentId).isEqualTo(removeId);
-        Assertions.assertThat(findAll.size()).isEqualTo(0);
+        Assertions.assertThat(findAll.size()).isEqualTo(recruitmentRequestList.size()-1);
+    }
+
+    @Test
+    void 채용공고목록(){
+
+        //given
+        List<RecruitmentRequest> recruitmentRequestList = new ArrayList<>();
+
+        //채용공고리스트
+        recruitmentRequestList.add(
+                RecruitmentRequest.builder()
+                        .content("내용")
+                        .position("신입1")
+                        .skill("java")
+                        .reward("100만원")
+                        .build()
+        );
+        recruitmentRequestList.add(
+                RecruitmentRequest.builder()
+                        .content("내용")
+                        .position("신입2")
+                        .skill("java")
+                        .reward("100만원")
+                        .build()
+        );
+        recruitmentRequestList.add(
+                RecruitmentRequest.builder()
+                        .content("내용")
+                        .position("신입3")
+                        .skill("python")
+                        .reward("100만원")
+                        .build()
+        );
     }
 
 }
