@@ -218,6 +218,7 @@ class RecruitmentServiceImplTest {
                         .content("내용").position("신입3").skill("python").reward("100만원")
                         .build()
         );
+
         return recruitmentRequestList;
     }
 
