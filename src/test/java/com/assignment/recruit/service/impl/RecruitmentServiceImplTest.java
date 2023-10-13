@@ -2,6 +2,7 @@ package com.assignment.recruit.service.impl;
 
 import com.assignment.recruit.dto.request.JoinCompanyRequest;
 import com.assignment.recruit.dto.request.RecruitmentRequest;
+import com.assignment.recruit.dto.response.RecruitmentDetailResponse;
 import com.assignment.recruit.dto.response.RecruitmentListResponse;
 import com.assignment.recruit.entity.Company;
 import com.assignment.recruit.entity.Recruitment;
@@ -12,8 +13,6 @@ import com.assignment.recruit.repository.RecruitmentRepository;
 import com.assignment.recruit.service.CompanyService;
 import com.assignment.recruit.service.RecruitmentService;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,7 +47,7 @@ class RecruitmentServiceImplTest {
     RecruitmentRepository recruitmentRepository;
 
     @Test
-    void 채용공고등록(){
+    void 채용공고_등록(){
         //given
         //회사
         Long saveCompanyId = companyService.join(joinCompanyRequest);
@@ -83,7 +82,7 @@ class RecruitmentServiceImplTest {
 
 
     @Test
-    void 채용공고수정(){
+    void 채용공고_수정(){
 
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
@@ -127,7 +126,7 @@ class RecruitmentServiceImplTest {
     }
 
     @Test
-    void 채용공고삭제(){
+    void 채용공고_삭제(){
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
 
@@ -148,7 +147,7 @@ class RecruitmentServiceImplTest {
     }
 
     @Test
-    void 채용공고목록(){
+    void 채용공고_목록(){
 
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
@@ -173,7 +172,7 @@ class RecruitmentServiceImplTest {
     
 
     @Test
-    void 채용공고검색(){
+    void 채용공고_검색(){
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
 
@@ -195,6 +194,33 @@ class RecruitmentServiceImplTest {
         //then
         Assertions.assertThat(recruitmentListResponse.getTotalPages()).isEqualTo(1);
         Assertions.assertThat(recruitmentListResponse.getRecruitmentResponseList().size()).isEqualTo(2);
+
+    }
+
+    @Test
+    void 채용공고_상세정보(){
+        //given
+        Long saveCompanyId = companyService.join(joinCompanyRequest);
+
+        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
+
+        recruitmentRequestList.forEach(
+                recruitmentRequest -> recruitmentService.register(saveCompanyId, recruitmentRequest)
+        );
+
+
+        //when
+        Recruitment recruitment = recruitmentRepository.findAll().get(0);
+        RecruitmentDetailResponse recruitmentDetail = recruitmentService.getRecruitmentDetail(saveCompanyId, recruitment.getId());
+
+        //then
+        Assertions.assertThat(recruitmentDetail.getId()).isEqualTo(recruitment.getId());
+        Assertions.assertThat(recruitmentDetail.getContent()).isEqualTo(recruitment.getContent());
+        Assertions.assertThat(recruitmentDetail.getReward()).isEqualTo(recruitment.getReward());
+        Assertions.assertThat(recruitmentDetail.getPosition()).isEqualTo(recruitment.getPosition());
+        Assertions.assertThat(recruitmentDetail.getSkill()).isEqualTo(recruitment.getSkill());
+
+        Assertions.assertThat(recruitmentDetail.getAnotherList()).contains(2L,3L);
 
     }
 
