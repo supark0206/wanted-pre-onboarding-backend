@@ -1,6 +1,7 @@
 package com.assignment.recruit.service.impl;
 
 import com.assignment.recruit.dto.request.RecruitmentRequest;
+import com.assignment.recruit.dto.response.RecruitmentDetailResponse;
 import com.assignment.recruit.dto.response.RecruitmentResponse;
 import com.assignment.recruit.entity.Company;
 import com.assignment.recruit.entity.Recruitment;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -91,6 +94,23 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public Page<Recruitment> searchRecruitmentList(Pageable pageable, String search) {
         return recruitmentRepository.searchRecruitment(pageable, search, search, search, search);
+    }
+
+    @Override
+    public RecruitmentDetailResponse getRecruitmentDetail(Long companyId, Long recruitmentId) {
+
+        Company company = companyRepository.findById(companyId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        Recruitment recruitment = recruitmentRepository.findByIdAndCompany(recruitmentId,company).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        ArrayList<Recruitment> recruitmentList = recruitmentRepository.findByCompany(company);
+        recruitmentList.remove(recruitment);
+
+        return RecruitmentDetailResponse.from(recruitment,recruitmentList);
     }
 
 }

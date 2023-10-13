@@ -2,6 +2,7 @@ package com.assignment.recruit.controller;
 
 import com.assignment.recruit.dto.commonResponse.ResultResponse;
 import com.assignment.recruit.dto.request.RecruitmentRequest;
+import com.assignment.recruit.dto.response.RecruitmentDetailResponse;
 import com.assignment.recruit.dto.response.RecruitmentListResponse;
 import com.assignment.recruit.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +59,10 @@ public class RecruitmentController {
         Pageable pageable = PageRequest.of(page-1,size, Sort.by("id"));
 
         return RecruitmentListResponse.recruitmentListResponseFrom(recruitmentService.searchRecruitmentList(pageable,search));
+    }
+
+    @GetMapping("/detail/{companyId}/{recruitId}")
+    public RecruitmentDetailResponse getRecruitmentDetail(@PathVariable Long companyId, @PathVariable Long recruitId){
+        return recruitmentService.getRecruitmentDetail(companyId,recruitId);
     }
 }

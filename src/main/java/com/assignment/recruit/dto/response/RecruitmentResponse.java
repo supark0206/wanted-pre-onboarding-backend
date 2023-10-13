@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RecruitmentResponse {
 
+    private Long id;
+
     private String companyName;
 
     private String position;
@@ -22,6 +24,7 @@ public class RecruitmentResponse {
 
     public static RecruitmentResponse from(Recruitment recruitment){
         return RecruitmentResponse.builder()
+                .id(recruitment.getId())
                 .companyName(recruitment.getCompany().getName())
                 .position(recruitment.getPosition())
                 .skill(recruitment.getSkill())

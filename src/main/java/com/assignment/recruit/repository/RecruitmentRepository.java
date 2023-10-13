@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> {
@@ -22,4 +23,6 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> 
             " or r.reward like %:reward%")
     Page<Recruitment> searchRecruitment(Pageable pageable, String companyName,
                                         String position, String skill, String reward);
+
+    ArrayList<Recruitment> findByCompany(Company company);
 }
