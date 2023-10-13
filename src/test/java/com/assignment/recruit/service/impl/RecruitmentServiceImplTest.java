@@ -59,11 +59,13 @@ class RecruitmentServiceImplTest {
         );
 
         RecruitmentRequest recruitmentRequest = RecruitmentRequest.builder()
+                .companyId(saveCompanyId)
                 .content("내용")
                 .position("신입")
                 .skill("java")
                 .reward("100만원")
                 .build();
+
 
         // when
         Long saveId = recruitmentService.register(recruitmentRequest);
@@ -94,13 +96,17 @@ class RecruitmentServiceImplTest {
         );
 
         RecruitmentRequest recruitmentRequest = RecruitmentRequest.builder()
+                .companyId(saveCompanyId)
                 .content("내용")
                 .position("신입")
                 .skill("java")
                 .reward("100만원")
                 .build();
 
+
+
         RecruitmentRequest recruitmentUpdateRequest = RecruitmentRequest.builder()
+                .companyId(saveCompanyId)
                 .content("내용 수정")
                 .position("신입 수정")
                 .skill("java 수정")
@@ -110,7 +116,7 @@ class RecruitmentServiceImplTest {
         Long saveId = recruitmentService.register(recruitmentRequest);
 
         // when
-        Long updateId = recruitmentService.update(saveCompanyId, saveId, recruitmentUpdateRequest);
+        Long updateId = recruitmentService.update(saveId, recruitmentUpdateRequest);
 
         Recruitment recruitmentUpdate = recruitmentRepository.findById(updateId).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND)
@@ -132,7 +138,7 @@ class RecruitmentServiceImplTest {
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
 
-        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
+        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList(saveCompanyId);
 
         recruitmentRequestList.forEach(
                 recruitmentRequest -> recruitmentService.register(recruitmentRequest)
@@ -154,7 +160,7 @@ class RecruitmentServiceImplTest {
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
 
-        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
+        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList(saveCompanyId);
 
         recruitmentRequestList.forEach(
                 recruitmentRequest -> recruitmentService.register(recruitmentRequest)
@@ -178,7 +184,7 @@ class RecruitmentServiceImplTest {
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
 
-        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
+        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList(saveCompanyId);
 
         recruitmentRequestList.forEach(
                 recruitmentRequest -> recruitmentService.register(recruitmentRequest)
@@ -204,7 +210,7 @@ class RecruitmentServiceImplTest {
         //given
         Long saveCompanyId = companyService.join(joinCompanyRequest);
 
-        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
+        List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList(saveCompanyId);
 
         recruitmentRequestList.forEach(
                 recruitmentRequest -> recruitmentService.register(recruitmentRequest)
@@ -227,23 +233,23 @@ class RecruitmentServiceImplTest {
     }
 
     //채용공고 리스트 생성
-    private List<RecruitmentRequest> getRecruitmentRequestList() {
+    private List<RecruitmentRequest> getRecruitmentRequestList(Long saveCompanyId) {
         List<RecruitmentRequest> recruitmentRequestList = new ArrayList<>();
 
         //채용공고리스트
         recruitmentRequestList.add(
                 RecruitmentRequest.builder()
-                        .content("내용").position("신입1").skill("java").reward("100만원")
+                        .companyId(saveCompanyId).content("내용").position("신입1").skill("java").reward("100만원")
                         .build()
         );
         recruitmentRequestList.add(
                 RecruitmentRequest.builder()
-                        .content("내용").position("신입2").skill("java").reward("100만원")
+                        .companyId(saveCompanyId).content("내용").position("신입2").skill("java").reward("100만원")
                         .build()
         );
         recruitmentRequestList.add(
                 RecruitmentRequest.builder()
-                        .content("내용").position("신입3").skill("python").reward("100만원")
+                        .companyId(saveCompanyId).content("내용").position("신입3").skill("python").reward("100만원")
                         .build()
         );
 

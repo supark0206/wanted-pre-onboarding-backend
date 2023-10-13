@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 public interface RecruitmentService {
     public Long register(RecruitmentRequest recruitmentRequest);
 
-    public Long update(Long companyId, Long recruitmentId, RecruitmentRequest recruitmentRequest);
+    public Long update(Long recruitmentId, RecruitmentRequest recruitmentRequest);
 
-    public Long remove(Long companyId, Long recruitmentId);
+    public Long remove(Long companyId,Long recruitmentId);
 
     public Page<Recruitment> recruitmentList(Pageable pageable);
 
