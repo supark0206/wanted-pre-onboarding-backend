@@ -233,10 +233,10 @@
   ```
 
 - **과제 6. 사용자는 채용공고에 지원합니다(선택사항 및 가산점요소). [GET]/api/apply-history**
- - 사용자는 1회만 지원 가능합니다.
- - 저장된 채용공고 id와 사용자 id를 받아서 저장합니다
- - ApplyHistory 테이블은 User와 Recruitment 테이블을 각각 외래키로 가지고있습니다
- - 같은 곳에 같은 사용자가 지원하게되면 validDuplicateApply 로직을 거쳐서 중복체크를 진행합니다
+  - 사용자는 1회만 지원 가능합니다.
+  - 저장된 채용공고 id와 사용자 id를 받아서 저장합니다
+  - ApplyHistory 테이블은 User와 Recruitment 테이블을 각각 외래키로 가지고있습니다
+  - 같은 곳에 같은 사용자가 지원하게되면 validDuplicateApply 로직을 거쳐서 중복체크를 진행합니다
 
   - request
   ```json 
