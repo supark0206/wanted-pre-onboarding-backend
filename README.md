@@ -30,6 +30,7 @@
 ### 구현한 API의 동작을 촬영한 데모 영상 링크
 
 ---
+https://supark0206.notion.site/10-b8b64bb504564283a76c3216efbd74ea?pvs=4
 
 <br><br>
 ### 구현 방법 및 이유에 대한 간략한 설명 / API문서
