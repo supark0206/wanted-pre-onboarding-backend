@@ -1,4 +1,4 @@
-package com.assignment.recurit;
+package com.assignment.recruit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
