@@ -35,16 +35,20 @@ public class ApplyHistoryServiceImpl implements ApplyHistoryService {
                 () -> new CustomException(ErrorCode.NOT_FOUND)
         );
 
-        if(applyHistoryRepository.findByRecruitmentAndUser(recruitment,user).isEmpty()){
-            return applyHistoryRepository.save(
-                    ApplyHistory.builder()
-                            .recruitment(recruitment)
-                            .user(user)
-                            .build()
-            ).getId();
-        }else{
+        validDuplicateApply(user, recruitment);
+
+        return applyHistoryRepository.save(
+                ApplyHistory.builder()
+                        .recruitment(recruitment)
+                        .user(user)
+                        .build()
+        ).getId();
+
+    }
+
+    private void validDuplicateApply(User user, Recruitment recruitment) {
+        if(applyHistoryRepository.findByRecruitmentAndUser(recruitment, user).isPresent()){
             throw new CustomException(ErrorCode.EXIST_APPLY_HISTORY);
         }
-
     }
 }
