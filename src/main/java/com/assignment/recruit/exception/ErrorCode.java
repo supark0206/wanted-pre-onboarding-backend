@@ -18,6 +18,7 @@ public enum ErrorCode {
 
     //409 CONFLICT : 리소스 충돌
     EXIST_USER_EMAIL(HttpStatus.CONFLICT, "중복된 이메일이 존재합니다."),
+    EXIST_APPLY_HISTORY(HttpStatus.CONFLICT, "이미 지원한 공고입니다."),
 
     //405 METHOD_NOT_ALLOWED : 허용 되지않은 Request Method 호출
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "허용되지 않은 메서드 호출입니다."),
