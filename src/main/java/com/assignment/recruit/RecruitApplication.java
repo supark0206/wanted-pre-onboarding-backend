@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class RecuritApplication {
+public class RecruitApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RecuritApplication.class, args);
+		SpringApplication.run(RecruitApplication.class, args);
 	}
 
 }

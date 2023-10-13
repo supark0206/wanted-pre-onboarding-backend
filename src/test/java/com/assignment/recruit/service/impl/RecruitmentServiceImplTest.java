@@ -66,7 +66,7 @@ class RecruitmentServiceImplTest {
                 .build();
 
         // when
-        Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
+        Long saveId = recruitmentService.register(recruitmentRequest);
 
         Recruitment recruitment = recruitmentRepository.findById(saveId).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND)
@@ -107,7 +107,7 @@ class RecruitmentServiceImplTest {
                 .reward("100만원 수정")
                 .build();
 
-        Long saveId = recruitmentService.register(saveCompanyId, recruitmentRequest);
+        Long saveId = recruitmentService.register(recruitmentRequest);
 
         // when
         Long updateId = recruitmentService.update(saveCompanyId, saveId, recruitmentUpdateRequest);
@@ -135,7 +135,7 @@ class RecruitmentServiceImplTest {
         List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
 
         recruitmentRequestList.forEach(
-                recruitmentRequest -> recruitmentService.register(saveCompanyId, recruitmentRequest)
+                recruitmentRequest -> recruitmentService.register(recruitmentRequest)
         );
 
         // when
@@ -157,7 +157,7 @@ class RecruitmentServiceImplTest {
         List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
 
         recruitmentRequestList.forEach(
-                recruitmentRequest -> recruitmentService.register(saveCompanyId, recruitmentRequest)
+                recruitmentRequest -> recruitmentService.register(recruitmentRequest)
         );
 
         //0페이지 3사이즈
@@ -181,7 +181,7 @@ class RecruitmentServiceImplTest {
         List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
 
         recruitmentRequestList.forEach(
-                recruitmentRequest -> recruitmentService.register(saveCompanyId, recruitmentRequest)
+                recruitmentRequest -> recruitmentService.register(recruitmentRequest)
         );
 
         //0페이지 3사이즈
@@ -207,7 +207,7 @@ class RecruitmentServiceImplTest {
         List<RecruitmentRequest> recruitmentRequestList = getRecruitmentRequestList();
 
         recruitmentRequestList.forEach(
-                recruitmentRequest -> recruitmentService.register(saveCompanyId, recruitmentRequest)
+                recruitmentRequest -> recruitmentService.register(recruitmentRequest)
         );
 
 

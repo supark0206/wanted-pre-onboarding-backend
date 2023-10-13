@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RecruitmentRequest {
 
+    //회사아이디
+    private Long CompanyId;
+
     //포지션
     private String position;
 

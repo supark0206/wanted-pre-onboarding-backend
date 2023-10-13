@@ -28,9 +28,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Transactional
     @Override
-    public Long register(Long companyId, RecruitmentRequest recruitmentRequest) {
+    public Long register(RecruitmentRequest recruitmentRequest) {
 
-        Company company = companyRepository.findById(companyId).orElseThrow(
+        Company company = companyRepository.findById(recruitmentRequest.getCompanyId()).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND)
         );
 

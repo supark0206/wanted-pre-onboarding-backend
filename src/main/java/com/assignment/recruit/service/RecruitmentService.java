@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface RecruitmentService {
-    public Long register(Long companyId, RecruitmentRequest recruitmentRequest);
+    public Long register(RecruitmentRequest recruitmentRequest);
 
     public Long update(Long companyId, Long recruitmentId, RecruitmentRequest recruitmentRequest);
 
